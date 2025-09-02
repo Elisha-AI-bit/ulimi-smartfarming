@@ -1,24 +1,63 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import theme from './theme';
 import './App.css';
+
+// Import page components
+import FarmerDashboard from './pages/FarmerDashboard';
+import AdminDashboard from './pages/AdminDashboard';
+import BuyerInterface from './pages/BuyerInterface';
+import VendorPortal from './pages/VendorPortal';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import LandingPage from './pages/LandingPage';
+import TaskManagement from './pages/TaskManagement';
+import CommunityForum from './pages/CommunityForum';
+import WeatherIntegration from './pages/WeatherIntegration';
+import AIAgriculturalAdvisor from './pages/AIAgriculturalAdvisor';
+import FarmManagement from './pages/FarmManagement';
+import UserManagement from './pages/UserManagement';
+import SensorData from './pages/SensorData';
+import PestDetection from './pages/PestDetection';
+import LivestockMonitoring from './pages/LivestockMonitoring';
+import Reports from './pages/Reports';
+import PerformanceMetrics from './pages/PerformanceMetrics';
+import ProductManagement from './pages/ProductManagement';
+import SalesAnalytics from './pages/SalesAnalytics';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <div className="App">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/farmer" element={<FarmerDashboard />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/buyer" element={<BuyerInterface />} />
+            <Route path="/vendor" element={<VendorPortal />} />
+            <Route path="/task-management" element={<TaskManagement />} />
+            <Route path="/community" element={<CommunityForum />} />
+            <Route path="/weather" element={<WeatherIntegration />} />
+            <Route path="/ai-advisor" element={<AIAgriculturalAdvisor />} />
+            <Route path="/farm-management" element={<FarmManagement />} />
+            <Route path="/user-management" element={<UserManagement />} />
+            <Route path="/sensor-data" element={<SensorData />} />
+            <Route path="/pest-detection" element={<PestDetection />} />
+            <Route path="/livestock-monitoring" element={<LivestockMonitoring />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/performance-metrics" element={<PerformanceMetrics />} />
+            <Route path="/product-management" element={<ProductManagement />} />
+            <Route path="/sales-analytics" element={<SalesAnalytics />} />
+          </Routes>
+        </div>
+      </Router>
+    </ThemeProvider>
   );
 }
 
