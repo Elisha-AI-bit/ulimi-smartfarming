@@ -11,26 +11,103 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Chip
+  Chip,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  List,
+  ListItem,
+  ListItemText,
+  Divider
 } from '@mui/material';
 import { 
   Assessment as AssessmentIcon,
   Download as DownloadIcon,
-  Visibility as VisibilityIcon
+  Visibility as VisibilityIcon,
+  Close as CloseIcon,
+  Print as PrintIcon,
+  Share as ShareIcon
 } from '@mui/icons-material';
 import DashboardLayout from '../components/DashboardLayout';
 
 const Reports = () => {
   const [reportType, setReportType] = useState('farm');
   const [dateRange, setDateRange] = useState('monthly');
+  const [selectedReport, setSelectedReport] = useState(null);
+  const [viewReportOpen, setViewReportOpen] = useState(false);
 
   // Mock report data
   const reportData = [
-    { id: 1, name: 'Farm Performance Report', type: 'Farm', date: '2023-05-15', status: 'Generated' },
-    { id: 2, name: 'Crop Yield Analysis', type: 'Crop', date: '2023-05-10', status: 'Generated' },
-    { id: 3, name: 'Financial Summary', type: 'Financial', date: '2023-05-05', status: 'Generated' },
-    { id: 4, name: 'Irrigation Efficiency', type: 'Irrigation', date: '2023-04-28', status: 'Generated' },
-    { id: 5, name: 'Pest Control Report', type: 'Pest', date: '2023-04-22', status: 'Pending' },
+    { 
+      id: 1, 
+      name: 'Farm Performance Report', 
+      type: 'Farm', 
+      date: '2023-05-15', 
+      status: 'Generated',
+      details: {
+        period: 'May 2023',
+        crops: ['Maize', 'Beans', 'Cassava'],
+        yield: '1,250 kg',
+        revenue: '$2,450',
+        expenses: '$850',
+        profit: '$1,600'
+      }
+    },
+    { 
+      id: 2, 
+      name: 'Crop Yield Analysis', 
+      type: 'Crop', 
+      date: '2023-05-10', 
+      status: 'Generated',
+      details: {
+        period: 'April-May 2023',
+        crops: ['Maize', 'Beans'],
+        yield: '850 kg',
+        growthRate: '12% increase',
+        recommendations: 'Continue with current irrigation schedule'
+      }
+    },
+    { 
+      id: 3, 
+      name: 'Financial Summary', 
+      type: 'Financial', 
+      date: '2023-05-05', 
+      status: 'Generated',
+      details: {
+        period: 'Q2 2023',
+        revenue: '$5,200',
+        expenses: '$2,100',
+        profit: '$3,100',
+        roi: '42%'
+      }
+    },
+    { 
+      id: 4, 
+      name: 'Irrigation Efficiency', 
+      type: 'Irrigation', 
+      date: '2023-04-28', 
+      status: 'Generated',
+      details: {
+        period: 'April 2023',
+        waterUsed: '15,000 L',
+        efficiency: '87%',
+        savings: '12% compared to last month'
+      }
+    },
+    { 
+      id: 5, 
+      name: 'Pest Control Report', 
+      type: 'Pest', 
+      date: '2023-04-22', 
+      status: 'Pending',
+      details: {
+        period: 'April 2023',
+        pestsDetected: 'Aphids, Armyworms',
+        treatment: 'In progress',
+        effectiveness: 'N/A'
+      }
+    },
   ];
 
   const getStatusColor = (status) => {
@@ -42,12 +119,45 @@ const Reports = () => {
     }
   };
 
+  const handleViewReport = (report) => {
+    setSelectedReport(report);
+    setViewReportOpen(true);
+  };
+
+  const handleCloseViewReport = () => {
+    setViewReportOpen(false);
+    setSelectedReport(null);
+  };
+
   return (
     <DashboardLayout userRole="farmer" userName="Farmer John">
       <Box sx={{ flexGrow: 1, p: 2 }}>
-        <Typography variant="h4" gutterBottom sx={{ mb: 3, color: '#2e7d32', fontWeight: 500 }}>
-          Reports
-        </Typography>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+          <Typography variant="h4" gutterBottom sx={{ color: '#2e7d32', fontWeight: 500 }}>
+            Reports
+          </Typography>
+          <Box>
+            <Button
+              variant="outlined"
+              startIcon={<PrintIcon />}
+              sx={{ mr: 1, borderColor: '#2e7d32', color: '#2e7d32' }}
+            >
+              Print All
+            </Button>
+            <Button
+              variant="contained"
+              startIcon={<ShareIcon />}
+              sx={{ 
+                backgroundColor: '#2e7d32',
+                '&:hover': {
+                  backgroundColor: '#1b5e20'
+                }
+              }}
+            >
+              Share Reports
+            </Button>
+          </Box>
+        </Box>
         
         <Grid container spacing={3}>
           <Grid item xs={12}>
@@ -162,6 +272,7 @@ const Reports = () => {
                               <Button 
                                 size="small"
                                 startIcon={<VisibilityIcon />}
+                                onClick={() => handleViewReport(report)}
                                 sx={{ mr: 1 }}
                               >
                                 View
@@ -193,6 +304,85 @@ const Reports = () => {
           </Grid>
         </Grid>
       </Box>
+
+      {/* View Report Dialog */}
+      <Dialog open={viewReportOpen} onClose={handleCloseViewReport} maxWidth="md" fullWidth>
+        <DialogTitle>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <Typography variant="h6">
+              {selectedReport?.name}
+            </Typography>
+            <Button onClick={handleCloseViewReport} startIcon={<CloseIcon />}>
+              Close
+            </Button>
+          </Box>
+        </DialogTitle>
+        <DialogContent>
+          {selectedReport && (
+            <Box>
+              <Box sx={{ display: 'flex', mb: 2 }}>
+                <Chip 
+                  label={selectedReport.type} 
+                  size="small" 
+                  sx={{ mr: 1, backgroundColor: '#2e7d3220', color: '#2e7d32' }}
+                />
+                <Typography variant="body2" color="textSecondary" sx={{ mr: 2 }}>
+                  Generated on: {selectedReport.date}
+                </Typography>
+                <Chip 
+                  label={selectedReport.status} 
+                  color={getStatusColor(selectedReport.status)} 
+                  size="small"
+                />
+              </Box>
+              
+              <Divider sx={{ my: 2 }} />
+              
+              <Typography variant="h6" sx={{ mb: 2, color: '#2e7d32' }}>
+                Report Details
+              </Typography>
+              
+              <List>
+                {Object.entries(selectedReport.details).map(([key, value], index) => (
+                  <ListItem key={index} sx={{ py: 1 }}>
+                    <ListItemText 
+                      primary={key.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase())} 
+                      secondary={Array.isArray(value) ? value.join(', ') : value}
+                      primaryTypographyProps={{ fontWeight: 500 }}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+              
+              <Divider sx={{ my: 2 }} />
+              
+              <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+                <Button 
+                  variant="outlined" 
+                  startIcon={<PrintIcon />}
+                  sx={{ mr: 1, borderColor: '#2e7d32', color: '#2e7d32' }}
+                >
+                  Print Report
+                </Button>
+                <Button 
+                  variant="contained" 
+                  startIcon={<DownloadIcon />}
+                  sx={{ 
+                    backgroundColor: '#2e7d32',
+                    '&:hover': {
+                      backgroundColor: '#1b5e20'
+                    }
+                  }}
+                >
+                  Download PDF
+                </Button>
+              </Box>
+            </Box>
+          )}
+        </DialogContent>
+        <DialogActions>
+        </DialogActions>
+      </Dialog>
     </DashboardLayout>
   );
 };

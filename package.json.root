@@ -1,0 +1,29 @@
+{
+  "name": "ulimi-smart-farming",
+  "version": "1.0.0",
+  "description": "A comprehensive smart farming management and advisory system",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd client && npm run build",
+    "start": "cd client && npm start",
+    "test": "cd client && npm test",
+    "dev": "cd client && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-username/ulimi-smart-farming.git"
+  },
+  "keywords": [
+    "farming",
+    "agriculture",
+    "ai",
+    "smart-farming",
+    "react"
+  ],
+  "author": "Ulimi Team",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/your-username/ulimi-smart-farming/issues"
+  },
+  "homepage": "https://github.com/your-username/ulimi-smart-farming#readme"
+}

@@ -14,7 +14,8 @@ import {
   CssBaseline,
   Avatar,
   Menu,
-  MenuItem
+  MenuItem,
+  Button
 } from '@mui/material';
 import { 
   Menu as MenuIcon, 
@@ -34,7 +35,8 @@ import {
   DeviceHub as DeviceHubIcon,
   SmartToy as SmartToyIcon,
   Pets as PetsIcon,
-  TrendingUp as TrendingUpIcon
+  TrendingUp as TrendingUpIcon,
+  Visibility as VisibilityIcon
 } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
@@ -72,7 +74,7 @@ const DashboardLayout = ({ children, userRole, userName = "User" }) => {
           { text: 'Task Management', icon: <TaskIcon />, path: '/task-management' },
           { text: 'Pest Detection', icon: <BugReportIcon />, path: '/pest-detection' },
           { text: 'AI Advisor', icon: <SmartToyIcon />, path: '/ai-advisor' },
-          { text: 'Irrigation', icon: <DeviceHubIcon />, path: 'http://localhost:5174/', external: true },
+          { text: 'Irrigation', icon: <DeviceHubIcon />, path: 'https://ulimi-iot.vercel.app/', external: true },
           { text: 'Weather', icon: <WbSunnyIcon />, path: '/weather' },
           { text: 'Marketplace', icon: <StoreIcon />, path: '/farmer' },
           { text: 'Livestock', icon: <PetsIcon />, path: '/livestock-monitoring' },
@@ -110,6 +112,31 @@ const DashboardLayout = ({ children, userRole, userName = "User" }) => {
   };
 
   const menuItems = getMenuItems();
+
+  // Add a special "View All" button for farmers
+  const renderFarmerViewButton = () => {
+    if (userRole === 'farmer') {
+      return (
+        <Box sx={{ p: 2 }}>
+          <Button
+            variant="contained"
+            startIcon={<VisibilityIcon />}
+            fullWidth
+            onClick={() => navigate('/reports')}
+            sx={{ 
+              backgroundColor: '#2e7d32',
+              '&:hover': {
+                backgroundColor: '#1b5e20'
+              }
+            }}
+          >
+            View All Reports
+          </Button>
+        </Box>
+      );
+    }
+    return null;
+  };
 
   return (
     <Box sx={{ display: 'flex' }}>
@@ -197,6 +224,7 @@ const DashboardLayout = ({ children, userRole, userName = "User" }) => {
               </ListItem>
             ))}
           </List>
+          {renderFarmerViewButton()}
           <Divider />
           <List>
             <ListItem button onClick={handleLogout}>
