@@ -152,9 +152,9 @@ const LivestockMonitoring = () => {
 
   return (
     <DashboardLayout userRole="farmer" userName="Farmer John">
-      <Box sx={{ flexGrow: 1, p: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h4" gutterBottom sx={{ color: '#2e7d32', fontWeight: 500 }}>
+      <Box sx={{ flexGrow: 1, p: { xs: 1, sm: 2 } }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap' }}>
+          <Typography variant="h4" gutterBottom sx={{ color: '#2e7d32', fontWeight: 500, mr: 2 }}>
             Livestock Monitoring
           </Typography>
           <Button 
@@ -163,14 +163,15 @@ const LivestockMonitoring = () => {
             onClick={handleViewHistory}
             sx={{ 
               borderColor: '#2e7d32',
-              color: '#2e7d32'
+              color: '#2e7d32',
+              mt: { xs: 1, sm: 0 }
             }}
           >
             View History
           </Button>
         </Box>
         
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           {livestockData.map((animal) => (
             <Grid item xs={12} md={6} key={animal.id}>
               <Card sx={{ 
@@ -254,7 +255,7 @@ const LivestockMonitoring = () => {
                     </Box>
                   )}
                   
-                  <Box sx={{ display: 'flex', mt: 2, gap: 1 }}>
+                  <Box sx={{ display: 'flex', mt: 2, gap: 1, flexWrap: 'wrap' }}>
                     <Button 
                       size="small"
                       startIcon={<VisibilityIcon />}
@@ -306,7 +307,7 @@ const LivestockMonitoring = () => {
                 </Box>
                 
                 <Grid container spacing={2}>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} sm={4}>
                     <Card variant="outlined">
                       <CardContent>
                         <Typography variant="h6" align="center" sx={{ color: '#4caf50', mb: 1 }}>
@@ -330,7 +331,7 @@ const LivestockMonitoring = () => {
                     </Card>
                   </Grid>
                   
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} sm={4}>
                     <Card variant="outlined">
                       <CardContent>
                         <Typography variant="h6" align="center" sx={{ color: '#2196f3', mb: 1 }}>
@@ -354,7 +355,7 @@ const LivestockMonitoring = () => {
                     </Card>
                   </Grid>
                   
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} sm={4}>
                     <Card variant="outlined">
                       <CardContent>
                         <Typography variant="h6" align="center" sx={{ color: '#ff9800', mb: 1 }}>
@@ -401,14 +402,14 @@ const LivestockMonitoring = () => {
         <DialogContent>
           {selectedAnimal && (
             <Box>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap' }}>
                 <Chip 
                   label={selectedAnimal.health} 
                   color={getHealthColor(selectedAnimal.health)} 
                   size="small"
                   icon={getHealthIcon(selectedAnimal.health)}
                 />
-                <Typography variant="body2" color="textSecondary">
+                <Typography variant="body2" color="textSecondary" sx={{ mt: { xs: 1, sm: 0 } }}>
                   Last Fed: {selectedAnimal.lastFed}
                 </Typography>
               </Box>

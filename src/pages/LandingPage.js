@@ -9,15 +9,21 @@ import {
   Card, 
   CardContent, 
   AppBar, 
-  Toolbar 
+  Toolbar,
+  useTheme,
+  useMediaQuery
 } from '@mui/material';
 import { Agriculture as AgricultureIcon, 
          Insights as InsightsIcon, 
          Store as StoreIcon, 
-         Security as SecurityIcon } from '@mui/icons-material';
+         Security as SecurityIcon,
+         ArrowForward as ArrowForwardIcon,
+         Check as CheckIcon } from '@mui/icons-material';
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const features = [
     {
@@ -42,37 +48,46 @@ const LandingPage = () => {
     }
   ];
 
+  const benefits = [
+    "Increase crop yields by up to 40%",
+    "Reduce water usage by 30%",
+    "Access real-time market prices",
+    "Connect with agricultural experts",
+    "Automate farm management tasks"
+  ];
+
   return (
     <div>
       {/* Header */}
-      <AppBar position="static" sx={{ backgroundColor: '#2e7d32' }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+      <AppBar position="sticky" sx={{ backgroundColor: '#ffffff', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
+        <Toolbar sx={{ justifyContent: 'space-between', px: { xs: 2, md: 4 } }}>
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <AgricultureIcon sx={{ mr: 1 }} />
-            <Typography variant="h6" component="div">
-              Ulimi Smart Farming
+            <AgricultureIcon sx={{ mr: 1, color: '#2e7d32' }} />
+            <Typography variant="h6" component="div" sx={{ fontWeight: 700, color: '#2e7d32' }}>
+              Ulimi
             </Typography>
           </Box>
           <Box>
             <Button 
               color="inherit" 
               onClick={() => navigate('/login')}
-              sx={{ mr: 2 }}
+              sx={{ mr: 2, fontWeight: 600, color: '#2e7d32' }}
             >
               Login
             </Button>
             <Button 
-              variant="outlined" 
+              variant="contained" 
               onClick={() => navigate('/register')}
               sx={{ 
-                color: 'white', 
-                borderColor: 'white',
+                backgroundColor: '#2e7d32',
+                fontWeight: 600,
+                px: 3,
                 '&:hover': {
-                  borderColor: 'rgba(255, 255, 255, 0.8)'
+                  backgroundColor: '#1b5e20'
                 }
               }}
             >
-              Register
+              Get Started
             </Button>
           </Box>
         </Toolbar>
@@ -82,69 +97,140 @@ const LandingPage = () => {
       <Box 
         sx={{ 
           background: 'linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%)', 
-          py: 8,
+          py: { xs: 6, md: 10 },
           textAlign: 'center'
         }}
       >
         <Container maxWidth="lg">
           <Grid container spacing={4} alignItems="center">
-            <Grid item xs={12} md={6}>
-              <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 500, color: '#2e7d32' }}>
-                Smart Farming Solutions
-              </Typography>
-              <Typography variant="h5" gutterBottom sx={{ mb: 4, color: '#388e3c' }}>
-                Empowering farmers with AI-driven insights and real-time monitoring
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
-                <Button 
-                  variant="contained" 
-                  size="large" 
-                  onClick={() => navigate('/register')}
+            <Grid item xs={12} md={6} order={{ xs: 2, md: 1 }}>
+              <Box sx={{ textAlign: { xs: 'center', md: 'left' }, pr: { md: 4 } }}>
+                <Typography 
+                  variant="h1" 
+                  component="h1" 
+                  gutterBottom 
                   sx={{ 
-                    backgroundColor: '#2e7d32',
-                    py: 1.5,
-                    px: 4,
-                    '&:hover': {
-                      backgroundColor: '#1b5e20'
-                    }
+                    fontWeight: 800, 
+                    color: 'text.primary',
+                    fontSize: { xs: '2.25rem', md: '3rem' },
+                    lineHeight: 1.2
                   }}
                 >
-                  Get Started
-                </Button>
-                <Button 
-                  variant="outlined" 
-                  size="large"
-                  onClick={() => navigate('/login')}
+                  Modern Agriculture, <Box component="span" sx={{ color: '#2e7d32' }}>Smart Solutions</Box>
+                </Typography>
+                <Typography 
+                  variant="h5" 
+                  gutterBottom 
                   sx={{ 
-                    borderColor: '#2e7d32',
-                    color: '#2e7d32',
-                    py: 1.5,
-                    px: 4,
-                    '&:hover': {
-                      borderColor: '#1b5e20',
-                      backgroundColor: 'rgba(46, 125, 50, 0.04)'
-                    }
+                    mb: 4, 
+                    color: 'text.secondary',
+                    fontWeight: 400
                   }}
                 >
-                  Login
-                </Button>
+                  Empowering farmers with AI-driven insights and real-time monitoring for better yields and sustainable farming practices.
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, gap: 2, justifyContent: { xs: 'center', md: 'flex-start' } }}>
+                  <Button 
+                    variant="contained" 
+                    size="large" 
+                    onClick={() => navigate('/register')}
+                    endIcon={<ArrowForwardIcon />}
+                    sx={{ 
+                      py: 1.5,
+                      px: 4,
+                      fontWeight: 600,
+                      fontSize: '1rem',
+                      backgroundColor: '#2e7d32',
+                      boxShadow: '0 4px 12px rgba(46, 125, 50, 0.25)',
+                      '&:hover': {
+                        backgroundColor: '#1b5e20',
+                        boxShadow: '0 6px 16px rgba(46, 125, 50, 0.35)'
+                      }
+                    }}
+                  >
+                    Start Free Trial
+                  </Button>
+                  <Button 
+                    variant="outlined" 
+                    size="large"
+                    onClick={() => navigate('/login')}
+                    sx={{ 
+                      py: 1.5,
+                      px: 4,
+                      fontWeight: 600,
+                      fontSize: '1rem',
+                      borderColor: '#2e7d32',
+                      color: '#2e7d32',
+                      '&:hover': {
+                        borderColor: '#1b5e20',
+                        backgroundColor: 'rgba(46, 125, 50, 0.04)'
+                      }
+                    }}
+                  >
+                    Login
+                  </Button>
+                </Box>
               </Box>
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} order={{ xs: 1, md: 2 }}>
               <Box 
                 sx={{ 
                   backgroundColor: 'white', 
-                  borderRadius: '50%', 
-                  width: 300, 
-                  height: 300, 
+                  borderRadius: '24px', 
+                  width: { xs: 250, sm: 350, md: 400 }, 
+                  height: { xs: 250, sm: 350, md: 400 }, 
                   display: 'flex', 
                   alignItems: 'center', 
                   justifyContent: 'center',
                   margin: '0 auto',
-                  boxShadow: '0px 10px 30px rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 20px 50px rgba(0, 0, 0, 0.1)',
+                  border: '8px solid white'
                 }}
               >
-                <AgricultureIcon sx={{ fontSize: 150, color: '#2e7d32' }} />
+                <AgricultureIcon sx={{ fontSize: { xs: 120, sm: 180, md: 200 }, color: '#2e7d32' }} />
+              </Box>
+            </Grid>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* Benefits Section */}
+      <Box sx={{ py: 8, backgroundColor: 'background.paper' }}>
+        <Container maxWidth="lg">
+          <Grid container spacing={6} alignItems="center">
+            <Grid item xs={12} md={6}>
+              <Typography variant="h2" sx={{ fontWeight: 700, mb: 3, color: 'text.primary' }}>
+                Transform Your Farming Operations
+              </Typography>
+              <Typography variant="h6" sx={{ color: 'text.secondary', mb: 4, fontWeight: 400 }}>
+                Our platform helps farmers increase productivity, reduce costs, and make data-driven decisions for better outcomes.
+              </Typography>
+              <Grid container spacing={2}>
+                {benefits.map((benefit, index) => (
+                  <Grid item xs={12} sm={6} key={index}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                      <CheckIcon sx={{ color: '#4caf50', mr: 1 }} />
+                      <Typography variant="body1">{benefit}</Typography>
+                    </Box>
+                  </Grid>
+                ))}
+              </Grid>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Box 
+                sx={{ 
+                  backgroundColor: 'grey.100', 
+                  borderRadius: 4, 
+                  height: 400, 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  boxShadow: '0 10px 30px rgba(0, 0, 0, 0.08)'
+                }}
+              >
+                <Typography variant="h6" color="text.secondary">
+                  Dashboard Preview
+                </Typography>
               </Box>
             </Grid>
           </Grid>
@@ -152,11 +238,16 @@ const LandingPage = () => {
       </Box>
 
       {/* Features Section */}
-      <Box sx={{ py: 8, backgroundColor: '#f5f7f9' }}>
+      <Box sx={{ py: 8, backgroundColor: '#f8fafc' }}>
         <Container maxWidth="lg">
-          <Typography variant="h4" align="center" gutterBottom sx={{ mb: 6, color: '#2e7d32', fontWeight: 500 }}>
-            Why Choose Ulimi?
-          </Typography>
+          <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Typography variant="h2" sx={{ fontWeight: 700, mb: 2, color: 'text.primary' }}>
+              Powerful Features
+            </Typography>
+            <Typography variant="h6" sx={{ color: 'text.secondary', maxWidth: 600, mx: 'auto', fontWeight: 400 }}>
+              Everything you need to optimize your farming operations and maximize your yields
+            </Typography>
+          </Box>
           <Grid container spacing={4}>
             {features.map((feature, index) => (
               <Grid item xs={12} sm={6} md={3} key={index}>
@@ -165,25 +256,27 @@ const LandingPage = () => {
                     height: '100%', 
                     display: 'flex', 
                     flexDirection: 'column', 
-                    alignItems: 'center', 
-                    textAlign: 'center',
-                    borderRadius: 3,
-                    boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)',
-                    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                    alignItems: 'flex-start', 
+                    textAlign: 'left',
+                    borderRadius: 4,
+                    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+                    border: '1px solid rgba(0, 0, 0, 0.03)',
+                    transition: 'all 0.3s ease',
                     '&:hover': {
                       transform: 'translateY(-8px)',
-                      boxShadow: '0px 12px 20px rgba(0, 0, 0, 0.15)'
+                      boxShadow: '0 12px 24px rgba(0, 0, 0, 0.1)',
+                      borderColor: '#2e7d32'
                     }
                   }}
                 >
-                  <CardContent>
+                  <CardContent sx={{ p: 3, flex: 1 }}>
                     <Box sx={{ mb: 2 }}>
                       {feature.icon}
                     </Box>
-                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 500 }}>
+                    <Typography variant="h6" gutterBottom sx={{ fontWeight: 600, mb: 1 }}>
                       {feature.title}
                     </Typography>
-                    <Typography variant="body2" color="textSecondary">
+                    <Typography variant="body2" color="text.secondary">
                       {feature.description}
                     </Typography>
                   </CardContent>
@@ -195,12 +288,12 @@ const LandingPage = () => {
       </Box>
 
       {/* CTA Section */}
-      <Box sx={{ py: 8, backgroundColor: '#2e7d32' }}>
+      <Box sx={{ py: 10, backgroundColor: '#2e7d32' }}>
         <Container maxWidth="md" sx={{ textAlign: 'center' }}>
-          <Typography variant="h4" gutterBottom sx={{ color: 'white', fontWeight: 500 }}>
+          <Typography variant="h2" gutterBottom sx={{ color: 'white', fontWeight: 700, mb: 2 }}>
             Ready to Transform Your Farming?
           </Typography>
-          <Typography variant="h6" sx={{ color: '#c8e6c9', mb: 4 }}>
+          <Typography variant="h6" sx={{ color: '#c8e6c9', mb: 5, maxWidth: 600, mx: 'auto', fontWeight: 400 }}>
             Join thousands of farmers already using Ulimi to increase productivity and profits
           </Typography>
           <Button 
@@ -210,11 +303,15 @@ const LandingPage = () => {
             sx={{ 
               backgroundColor: 'white',
               color: '#2e7d32',
-              py: 1.5,
-              px: 4,
-              fontWeight: 'bold',
+              py: 2,
+              px: 6,
+              fontWeight: 700,
+              fontSize: '1.125rem',
+              boxShadow: '0 6px 20px rgba(0, 0, 0, 0.15)',
               '&:hover': {
-                backgroundColor: '#f5f5f5'
+                backgroundColor: '#f8fafc',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)'
               }
             }}
           >
@@ -224,49 +321,49 @@ const LandingPage = () => {
       </Box>
 
       {/* Footer */}
-      <Box sx={{ py: 4, backgroundColor: '#1b5e20', color: 'white' }}>
+      <Box sx={{ py: 6, backgroundColor: 'text.primary', color: 'white' }}>
         <Container maxWidth="lg">
           <Grid container spacing={4}>
             <Grid item xs={12} md={4}>
               <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                <AgricultureIcon sx={{ mr: 1 }} />
-                <Typography variant="h6">Ulimi Smart Farming</Typography>
+                <AgricultureIcon sx={{ mr: 1, color: '#2e7d32' }} />
+                <Typography variant="h6" sx={{ fontWeight: 700 }}>Ulimi</Typography>
               </Box>
-              <Typography variant="body2" sx={{ color: '#c8e6c9' }}>
+              <Typography variant="body2" sx={{ color: 'grey.400', mb: 2 }}>
                 Empowering farmers with cutting-edge technology for better yields and sustainable farming practices.
               </Typography>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" gutterBottom>Quick Links</Typography>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Quick Links</Typography>
               <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                 <Button 
                   color="inherit" 
                   onClick={() => navigate('/login')}
-                  sx={{ justifyContent: 'flex-start', color: '#c8e6c9' }}
+                  sx={{ justifyContent: 'flex-start', color: 'grey.400', px: 0, py: 0.5 }}
                 >
                   Login
                 </Button>
                 <Button 
                   color="inherit" 
                   onClick={() => navigate('/register')}
-                  sx={{ justifyContent: 'flex-start', color: '#c8e6c9' }}
+                  sx={{ justifyContent: 'flex-start', color: 'grey.400', px: 0, py: 0.5 }}
                 >
                   Register
                 </Button>
               </Box>
             </Grid>
             <Grid item xs={12} md={4}>
-              <Typography variant="h6" gutterBottom>Contact Us</Typography>
-              <Typography variant="body2" sx={{ color: '#c8e6c9', mb: 1 }}>
+              <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>Contact Us</Typography>
+              <Typography variant="body2" sx={{ color: 'grey.400', mb: 1 }}>
                 Email: info@ulimi.com
               </Typography>
-              <Typography variant="body2" sx={{ color: '#c8e6c9' }}>
+              <Typography variant="body2" sx={{ color: 'grey.400' }}>
                 Phone: +1 (555) 123-4567
               </Typography>
             </Grid>
           </Grid>
-          <Box sx={{ mt: 4, textAlign: 'center', pt: 2, borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
-            <Typography variant="body2" sx={{ color: '#c8e6c9' }}>
+          <Box sx={{ mt: 6, textAlign: 'center', pt: 3, borderTop: '1px solid rgba(255, 255, 255, 0.1)' }}>
+            <Typography variant="body2" sx={{ color: 'grey.500' }}>
               © {new Date().getFullYear()} Ulimi Smart Farming System. All rights reserved.
             </Typography>
           </Box>

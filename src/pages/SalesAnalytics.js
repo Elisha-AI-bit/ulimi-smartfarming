@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Box, 
   Grid, 
@@ -16,31 +16,65 @@ import {
 } from '@mui/icons-material';
 import DashboardLayout from '../components/DashboardLayout';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
+import zambianDemoData from '../utils/zambian-demo-data';
 
-// Mock data for sales
-const mockSalesData = [
-  { month: 'Jan', sales: 4000, orders: 240 },
-  { month: 'Feb', sales: 3000, orders: 139 },
-  { month: 'Mar', sales: 2000, orders: 180 },
-  { month: 'Apr', sales: 2780, orders: 190 },
-  { month: 'May', sales: 1890, orders: 120 },
-  { month: 'Jun', sales: 2390, orders: 170 },
-];
+// Generate Zambian sales data
+const generateZambianSalesData = () => {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  return months.map(month => ({
+    month,
+    sales: Math.floor(Math.random() * 5000) + 2000, // Sales in ZMW
+    orders: Math.floor(Math.random() * 200) + 80
+  }));
+};
 
-// Mock data for product categories
-const mockCategoryData = [
-  { name: 'Vegetables', value: 400 },
-  { name: 'Fruits', value: 300 },
-  { name: 'Dairy', value: 300 },
-  { name: 'Meat', value: 200 },
-  { name: 'Grains', value: 100 },
-];
+// Generate Zambian category data with local products
+const generateZambianCategoryData = () => {
+  return [
+    { name: 'Maize', value: 35 },
+    { name: 'Cassava', value: 25 },
+    { name: 'Sweet Potatoes', value: 20 },
+    { name: 'Rice', value: 10 },
+    { name: 'Other Crops', value: 10 }
+  ];
+};
+
+// Generate recent orders with Zambian context
+const generateZambianOrders = () => {
+  const customers = ['Mwansa Mwale', 'Chiluba Banda', 'Nchimunya Kaunda', 'Mukanjila Phiri'];
+  const products = ['Maize (100kg)', 'Cassava (50kg)', 'Sweet Potatoes (30kg)', 'Rice (25kg)'];
+  const statuses = ['Delivered', 'Processing', 'Shipped'];
+  
+  return [
+    { id: 1, customer: customers[0], product: products[0], amount: 'K249.99', status: statuses[0] },
+    { id: 2, customer: customers[1], product: products[1], amount: 'K159.99', status: statuses[1] },
+    { id: 3, customer: customers[2], product: products[2], amount: 'K179.99', status: statuses[2] },
+    { id: 4, customer: customers[3], product: products[3], amount: 'K99.99', status: statuses[0] },
+  ];
+};
 
 const COLORS = ['#2e7d32', '#4caf50', '#82ca9d', '#ff9800', '#ffeb3b'];
 
 const SalesAnalytics = () => {
-  const [salesData] = useState(mockSalesData);
-  const [categoryData] = useState(mockCategoryData);
+  const [salesData, setSalesData] = useState([]);
+  const [categoryData, setCategoryData] = useState([]);
+  const [recentOrders, setRecentOrders] = useState([]);
+
+  useEffect(() => {
+    // Generate Zambian demo data
+    setSalesData(generateZambianSalesData());
+    setCategoryData(generateZambianCategoryData());
+    setRecentOrders(generateZambianOrders());
+    
+    // Also use some data from the zambianDemoData generator
+    const users = zambianDemoData.generateUsers(10);
+    const farms = zambianDemoData.generateFarms(users, 5);
+  }, []);
+
+  // Calculate totals from the data
+  const totalSales = salesData.reduce((sum, item) => sum + item.sales, 0);
+  const totalOrders = salesData.reduce((sum, item) => sum + item.orders, 0);
+  const avgOrderValue = totalOrders > 0 ? (totalSales / totalOrders).toFixed(2) : 0;
 
   return (
     <DashboardLayout userRole="vendor" userName="Vendor">
@@ -65,7 +99,7 @@ const SalesAnalytics = () => {
                   </Typography>
                 </Box>
                 <Typography variant="h3" sx={{ color: '#2e7d32', fontWeight: 500 }}>
-                  $1,245
+                  K{totalSales.toLocaleString()}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   +12% from last month
@@ -88,7 +122,7 @@ const SalesAnalytics = () => {
                   </Typography>
                 </Box>
                 <Typography variant="h3" sx={{ color: '#2e7d32', fontWeight: 500 }}>
-                  142
+                  {totalOrders}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   +8% from last month
@@ -111,7 +145,7 @@ const SalesAnalytics = () => {
                   </Typography>
                 </Box>
                 <Typography variant="h3" sx={{ color: '#2e7d32', fontWeight: 500 }}>
-                  $8.76
+                  K{avgOrderValue}
                 </Typography>
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   +5% from last month
@@ -156,17 +190,24 @@ const SalesAnalytics = () => {
                     Monthly Sales Performance
                   </Typography>
                 </Box>
-                <ResponsiveContainer width="100%" height={300}>
-                  <BarChart data={salesData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="month" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="sales" fill="#2e7d32" name="Sales ($)" />
-                    <Bar dataKey="orders" fill="#82ca9d" name="Orders" />
-                  </BarChart>
-                </ResponsiveContainer>
+                <Box sx={{ width: '100%', minHeight: { xs: 250, sm: 300, md: 350 } }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={salesData}>
+                      <CartesianGrid strokeDasharray="3 3" />
+                      <XAxis dataKey="month" />
+                      <YAxis />
+                      <Tooltip 
+                        formatter={(value, name) => {
+                          if (name === 'sales') return [`K${value}`, 'Sales'];
+                          return [value, name];
+                        }}
+                      />
+                      <Legend />
+                      <Bar dataKey="sales" fill="#2e7d32" name="Sales (K)" />
+                      <Bar dataKey="orders" fill="#82ca9d" name="Orders" />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
@@ -184,26 +225,28 @@ const SalesAnalytics = () => {
                     Product Category Distribution
                   </Typography>
                 </Box>
-                <ResponsiveContainer width="100%" height={300}>
-                  <PieChart>
-                    <Pie
-                      data={categoryData}
-                      cx="50%"
-                      cy="50%"
-                      labelLine={false}
-                      outerRadius={80}
-                      fill="#8884d8"
-                      dataKey="value"
-                      label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                    >
-                      {categoryData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                      ))}
-                    </Pie>
-                    <Tooltip />
-                    <Legend />
-                  </PieChart>
-                </ResponsiveContainer>
+                <Box sx={{ width: '100%', minHeight: { xs: 250, sm: 300, md: 350 } }}>
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={categoryData}
+                        cx="50%"
+                        cy="50%"
+                        labelLine={false}
+                        outerRadius={80}
+                        fill="#8884d8"
+                        dataKey="value"
+                        label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                      >
+                        {categoryData.map((entry, index) => (
+                          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                      </Pie>
+                      <Tooltip />
+                      <Legend />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
@@ -223,12 +266,7 @@ const SalesAnalytics = () => {
                 </Box>
                 
                 <Grid container spacing={2}>
-                  {[
-                    { id: 1, customer: 'John Doe', product: 'Organic Tomatoes', amount: '$24.99', status: 'Delivered' },
-                    { id: 2, customer: 'Jane Smith', product: 'Free Range Eggs', amount: '$15.99', status: 'Processing' },
-                    { id: 3, customer: 'Bob Johnson', product: 'Honey', amount: '$17.99', status: 'Shipped' },
-                    { id: 4, customer: 'Alice Brown', product: 'Fresh Carrots', amount: '$9.99', status: 'Delivered' },
-                  ].map((order) => (
+                  {recentOrders.map((order) => (
                     <Grid item xs={12} sm={6} md={3} key={order.id}>
                       <Card variant="outlined">
                         <CardContent>

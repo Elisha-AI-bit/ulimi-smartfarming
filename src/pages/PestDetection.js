@@ -128,9 +128,9 @@ const PestDetection = () => {
 
   return (
     <DashboardLayout userRole="farmer" userName="Farmer John">
-      <Box sx={{ flexGrow: 1, p: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h4" gutterBottom sx={{ color: '#2e7d32', fontWeight: 500 }}>
+      <Box sx={{ flexGrow: 1, p: { xs: 1, sm: 2 } }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap' }}>
+          <Typography variant="h4" gutterBottom sx={{ color: '#2e7d32', fontWeight: 500, mr: 2 }}>
             Pest Detection
           </Typography>
           <Button 
@@ -139,14 +139,15 @@ const PestDetection = () => {
             onClick={() => setViewDetailsOpen(true)}
             sx={{ 
               borderColor: '#2e7d32',
-              color: '#2e7d32'
+              color: '#2e7d32',
+              mt: { xs: 1, sm: 0 }
             }}
           >
             View All Reports
           </Button>
         </Box>
         
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
             <Card sx={{ 
               borderRadius: 3, 
@@ -252,14 +253,14 @@ const PestDetection = () => {
               boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)' 
             }}>
               <CardContent>
-                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                  <Typography variant="h6" sx={{ fontWeight: 500, color: '#2e7d32' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2, flexWrap: 'wrap' }}>
+                  <Typography variant="h6" sx={{ fontWeight: 500, color: '#2e7d32', mr: 2 }}>
                     Common Pests & Treatments
                   </Typography>
                   <Button 
                     size="small" 
                     startIcon={<InfoIcon />}
-                    sx={{ color: '#2e7d32' }}
+                    sx={{ color: '#2e7d32', mt: { xs: 1, sm: 0 } }}
                   >
                     Learn More
                   </Button>

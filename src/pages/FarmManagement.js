@@ -121,7 +121,7 @@ const FarmManagement = () => {
 
   return (
     <DashboardLayout userRole="farmer" userName="Farmer John">
-      <Box sx={{ flexGrow: 1, p: 2 }}>
+      <Box sx={{ flexGrow: 1, p: { xs: 1, sm: 2 } }}>
         <Typography variant="h4" gutterBottom sx={{ mb: 3, color: '#2e7d32', fontWeight: 500 }}>
           Farm Management
         </Typography>
@@ -143,7 +143,7 @@ const FarmManagement = () => {
         </Button>
         
         {/* Farms Grid */}
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           {farms.map((farm) => (
             <Grid item xs={12} sm={6} md={4} key={farm.id}>
               <Card sx={{ 

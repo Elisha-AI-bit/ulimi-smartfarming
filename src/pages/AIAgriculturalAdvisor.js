@@ -105,15 +105,15 @@ const AIAgriculturalAdvisor = () => {
 
   return (
     <DashboardLayout userRole="farmer" userName="Farmer John">
-      <Box sx={{ flexGrow: 1, p: 2 }}>
+      <Box sx={{ flexGrow: 1, p: { xs: 1, sm: 2 } }}>
         <Typography variant="h4" gutterBottom sx={{ mb: 3, color: '#2e7d32', fontWeight: 500 }}>
           AI Agricultural Advisor
         </Typography>
         
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           {/* Image Analysis Section */}
           <Grid item xs={12} md={6}>
-            <Card sx={{ mb: 3, borderRadius: 3, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)' }}>
+            <Card sx={{ mb: 2, borderRadius: 3, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)' }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <BugReportIcon sx={{ mr: 1, color: '#2e7d32' }} />
@@ -223,7 +223,7 @@ const AIAgriculturalAdvisor = () => {
           
           {/* Question & Answer Section */}
           <Grid item xs={12} md={6}>
-            <Card sx={{ mb: 3, borderRadius: 3, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)' }}>
+            <Card sx={{ mb: 2, borderRadius: 3, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)' }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <SmartToyIcon sx={{ mr: 1, color: '#2e7d32' }} />

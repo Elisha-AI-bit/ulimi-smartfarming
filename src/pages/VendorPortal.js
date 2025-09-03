@@ -18,7 +18,7 @@ const VendorPortal = () => {
   // Mock data
   const statsData = [
     { title: 'Total Products', value: '12', icon: <InventoryIcon />, color: '#2e7d32' },
-    { title: 'Total Sales', value: '$1,245.50', icon: <StoreIcon />, color: '#2e7d32' },
+    { title: 'Total Sales', value: 'K1,245.50', icon: <StoreIcon />, color: '#2e7d32' },
     { title: 'Pending Orders', value: '3', icon: <AssessmentIcon />, color: '#ff9800' },
   ];
 

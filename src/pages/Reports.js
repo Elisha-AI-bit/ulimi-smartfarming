@@ -49,9 +49,9 @@ const Reports = () => {
         period: 'May 2023',
         crops: ['Maize', 'Beans', 'Cassava'],
         yield: '1,250 kg',
-        revenue: '$2,450',
-        expenses: '$850',
-        profit: '$1,600'
+        revenue: 'K2,450',
+        expenses: 'K850',
+        profit: 'K1,600'
       }
     },
     { 
@@ -76,9 +76,9 @@ const Reports = () => {
       status: 'Generated',
       details: {
         period: 'Q2 2023',
-        revenue: '$5,200',
-        expenses: '$2,100',
-        profit: '$3,100',
+        revenue: 'K5,200',
+        expenses: 'K2,100',
+        profit: 'K3,100',
         roi: '42%'
       }
     },
@@ -131,16 +131,27 @@ const Reports = () => {
 
   return (
     <DashboardLayout userRole="farmer" userName="Farmer John">
-      <Box sx={{ flexGrow: 1, p: 2 }}>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
-          <Typography variant="h4" gutterBottom sx={{ color: '#2e7d32', fontWeight: 500 }}>
+      <Box sx={{ flexGrow: 1, p: { xs: 1, sm: 2 } }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, flexWrap: 'wrap' }}>
+          <Typography variant="h4" gutterBottom sx={{ color: '#2e7d32', fontWeight: 500, mr: 2 }}>
             Reports
           </Typography>
-          <Box>
+          <Box sx={{ 
+            display: 'flex', 
+            flexDirection: { xs: 'column', sm: 'row' },
+            alignItems: { xs: 'stretch', sm: 'center' },
+            gap: 1,
+            mt: { xs: 1, sm: 0 }
+          }}>
             <Button
               variant="outlined"
               startIcon={<PrintIcon />}
-              sx={{ mr: 1, borderColor: '#2e7d32', color: '#2e7d32' }}
+              sx={{ 
+                mr: { xs: 0, sm: 1 }, 
+                mb: { xs: 1, sm: 0 },
+                borderColor: '#2e7d32', 
+                color: '#2e7d32' 
+              }}
             >
               Print All
             </Button>
@@ -159,7 +170,7 @@ const Reports = () => {
           </Box>
         </Box>
         
-        <Grid container spacing={3}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <Card sx={{ 
               borderRadius: 3, 
@@ -174,7 +185,7 @@ const Reports = () => {
                 </Box>
                 
                 <Grid container spacing={2}>
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} sm={4}>
                     <FormControl fullWidth>
                       <InputLabel>Report Type</InputLabel>
                       <Select
@@ -192,7 +203,7 @@ const Reports = () => {
                     </FormControl>
                   </Grid>
                   
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} sm={4}>
                     <FormControl fullWidth>
                       <InputLabel>Date Range</InputLabel>
                       <Select
@@ -209,7 +220,7 @@ const Reports = () => {
                     </FormControl>
                   </Grid>
                   
-                  <Grid item xs={12} md={4}>
+                  <Grid item xs={12} sm={4}>
                     <Button
                       variant="contained"
                       fullWidth
@@ -247,12 +258,18 @@ const Reports = () => {
                     <Grid item xs={12} key={report.id}>
                       <Card variant="outlined">
                         <CardContent>
-                          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Box>
+                          <Box sx={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center',
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            gap: 2
+                          }}>
+                            <Box sx={{ width: { xs: '100%', sm: 'auto' } }}>
                               <Typography variant="h6">
                                 {report.name}
                               </Typography>
-                              <Box sx={{ display: 'flex', alignItems: 'center', mt: 1 }}>
+                              <Box sx={{ display: 'flex', alignItems: 'center', mt: 1, flexWrap: 'wrap' }}>
                                 <Chip 
                                   label={report.type} 
                                   size="small" 
@@ -268,12 +285,18 @@ const Reports = () => {
                                 />
                               </Box>
                             </Box>
-                            <Box>
+                            <Box sx={{ 
+                              display: 'flex',
+                              flexDirection: { xs: 'column', sm: 'row' },
+                              gap: 1,
+                              width: { xs: '100%', sm: 'auto' }
+                            }}>
                               <Button 
                                 size="small"
                                 startIcon={<VisibilityIcon />}
                                 onClick={() => handleViewReport(report)}
-                                sx={{ mr: 1 }}
+                                sx={{ mr: { xs: 0, sm: 1 }, mb: { xs: 1, sm: 0 } }}
+                                fullWidth={window.innerWidth < 600}
                               >
                                 View
                               </Button>
@@ -289,6 +312,7 @@ const Reports = () => {
                                     backgroundColor: 'rgba(46, 125, 50, 0.04)'
                                   }
                                 }}
+                                fullWidth={window.innerWidth < 600}
                               >
                                 Download
                               </Button>
@@ -320,7 +344,7 @@ const Reports = () => {
         <DialogContent>
           {selectedReport && (
             <Box>
-              <Box sx={{ display: 'flex', mb: 2 }}>
+              <Box sx={{ display: 'flex', mb: 2, flexWrap: 'wrap' }}>
                 <Chip 
                   label={selectedReport.type} 
                   size="small" 

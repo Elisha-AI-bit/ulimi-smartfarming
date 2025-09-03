@@ -32,7 +32,10 @@ export const supabase = {
     // Mock database operations
     return {
       select: () => ({
-        eq: () => Promise.resolve({ data: [], error: null })
+        eq: () => ({
+          single: () => Promise.resolve({ data: { role: 'farmer' }, error: null }),
+          then: (callback) => Promise.resolve({ data: [], error: null }).then(callback)
+        })
       }),
       insert: (data) => Promise.resolve({ data: [data], error: null }),
       update: (data) => ({

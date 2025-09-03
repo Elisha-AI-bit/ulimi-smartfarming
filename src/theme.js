@@ -38,6 +38,11 @@ const theme = createTheme({
       light: '#ff7961',
       dark: '#ba000d',
     },
+    text: {
+      primary: '#333333',
+      secondary: '#666666',
+      disabled: '#999999',
+    },
   },
   typography: {
     fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
@@ -65,16 +70,49 @@ const theme = createTheme({
       fontSize: '1.125rem',
       fontWeight: 500,
     },
+    body1: {
+      fontSize: '1rem',
+      fontWeight: 400,
+    },
+    body2: {
+      fontSize: '0.875rem',
+      fontWeight: 400,
+    },
+    button: {
+      fontSize: '0.875rem',
+      fontWeight: 500,
+      textTransform: 'none',
+    },
   },
   shape: {
     borderRadius: 8,
   },
+  shadows: [
+    'none',
+    '0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06)',
+    '0px 4px 6px rgba(0, 0, 0, 0.1), 0px 2px 4px rgba(0, 0, 0, 0.06)',
+    '0px 10px 15px rgba(0, 0, 0, 0.1), 0px 4px 6px rgba(0, 0, 0, 0.05)',
+    '0px 20px 25px rgba(0, 0, 0, 0.1), 0px 10px 10px rgba(0, 0, 0, 0.04)',
+    '0px 25px 50px rgba(0, 0, 0, 0.15)',
+    ...Array(19).fill('0px 3px 5px rgba(0, 0, 0, 0.1)')
+  ],
   components: {
     MuiButton: {
       styleOverrides: {
         root: {
           textTransform: 'none',
           borderRadius: 8,
+          fontWeight: 500,
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: 'none',
+          },
+        },
+        contained: {
+          boxShadow: 'none',
+          '&:hover': {
+            boxShadow: 'none',
+          },
         },
       },
     },
@@ -90,6 +128,28 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
+          backgroundColor: '#2e7d32',
+          color: '#ffffff',
+        },
+      },
+    },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          '& .MuiOutlinedInput-root': {
+            borderRadius: 8,
+          },
+        },
+      },
+    },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          borderRadius: 12,
+          boxShadow: '0px 2px 10px rgba(0, 0, 0, 0.1)',
+        },
+        rounded: {
+          borderRadius: 12,
         },
       },
     },

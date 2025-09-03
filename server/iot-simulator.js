@@ -8,6 +8,10 @@ class IoTDataSimulator {
       { id: 'sensor-002', location: 'Field A', type: 'temperature' },
       { id: 'sensor-003', location: 'Field B', type: 'soil-moisture' },
       { id: 'sensor-004', location: 'Greenhouse', type: 'humidity' },
+      { id: 'sensor-005', location: 'Field C', type: 'ph-level' },
+      { id: 'sensor-006', location: 'Field A', type: 'nitrogen' },
+      { id: 'sensor-007', location: 'Field B', type: 'phosphorus' },
+      { id: 'sensor-008', location: 'Field C', type: 'potassium' },
     ];
   }
 
@@ -22,15 +26,30 @@ class IoTDataSimulator {
     }));
   }
 
-  // Generate random values based on sensor type
+  // Generate random values based on sensor type with Zambian agricultural context
   getRandomValue(type) {
     switch(type) {
       case 'soil-moisture':
-        return Math.floor(Math.random() * 30) + 20; // 20-50%
+        // Zambian soil moisture levels for different crops (20-60%)
+        return Math.floor(Math.random() * 40) + 20;
       case 'temperature':
-        return Math.floor(Math.random() * 15) + 15; // 15-30°C
+        // Zambian temperature range in Celsius (15-35°C)
+        return Math.floor(Math.random() * 20) + 15;
       case 'humidity':
-        return Math.floor(Math.random() * 40) + 40; // 40-80%
+        // Humidity levels in Zambian agricultural areas (40-90%)
+        return Math.floor(Math.random() * 50) + 40;
+      case 'ph-level':
+        // Soil pH levels suitable for Zambian crops (4.5-8.0)
+        return (Math.random() * 3.5 + 4.5).toFixed(2);
+      case 'nitrogen':
+        // Nitrogen levels in soil (ppm) for Zambian agriculture (10-150 ppm)
+        return Math.floor(Math.random() * 140) + 10;
+      case 'phosphorus':
+        // Phosphorus levels in soil (ppm) for Zambian agriculture (5-80 ppm)
+        return Math.floor(Math.random() * 75) + 5;
+      case 'potassium':
+        // Potassium levels in soil (ppm) for Zambian agriculture (50-200 ppm)
+        return Math.floor(Math.random() * 150) + 50;
       default:
         return Math.floor(Math.random() * 100);
     }

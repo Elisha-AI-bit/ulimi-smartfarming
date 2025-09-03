@@ -19,6 +19,7 @@ import {
   Thunderstorm as ThunderstormIcon,
   AcUnit as AcUnitIcon
 } from '@mui/icons-material';
+import { ResponsiveContainer, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import DashboardLayout from '../components/DashboardLayout';
 
 const WeatherIntegration = () => {
@@ -31,23 +32,23 @@ const WeatherIntegration = () => {
     // Simulate API call
     setTimeout(() => {
       setWeatherData({
-        location: 'Green Valley Farm',
-        temperature: 24,
-        condition: 'Partly Cloudy',
-        humidity: 65,
-        windSpeed: 12,
+        location: 'Lusaka, Zambia',
+        temperature: 28,
+        condition: 'Sunny',
+        humidity: 45,
+        windSpeed: 8,
         precipitation: 0,
-        uvIndex: 5,
-        sunrise: '6:24 AM',
-        sunset: '8:15 PM'
+        uvIndex: 7,
+        sunrise: '6:15 AM',
+        sunset: '6:30 PM'
       });
       
       setForecast([
-        { day: 'Today', high: 26, low: 18, condition: 'Partly Cloudy', precipitation: 10 },
-        { day: 'Tomorrow', high: 28, low: 19, condition: 'Sunny', precipitation: 0 },
-        { day: 'Wednesday', high: 25, low: 17, condition: 'Rainy', precipitation: 80 },
-        { day: 'Thursday', high: 23, low: 16, condition: 'Cloudy', precipitation: 20 },
-        { day: 'Friday', high: 27, low: 18, condition: 'Sunny', precipitation: 0 }
+        { day: 'Today', high: 30, low: 19, condition: 'Sunny', precipitation: 0 },
+        { day: 'Tomorrow', high: 32, low: 20, condition: 'Sunny', precipitation: 0 },
+        { day: 'Wednesday', high: 29, low: 18, condition: 'Partly Cloudy', precipitation: 10 },
+        { day: 'Thursday', high: 27, low: 17, condition: 'Cloudy', precipitation: 20 },
+        { day: 'Friday', high: 31, low: 19, condition: 'Sunny', precipitation: 0 }
       ]);
       
       setLoading(false);
@@ -57,17 +58,17 @@ const WeatherIntegration = () => {
   const getWeatherIcon = (condition) => {
     switch(condition.toLowerCase()) {
       case 'sunny':
-        return <WbSunnyIcon sx={{ fontSize: 40, color: '#ff9800' }} />;
+        return <WbSunnyIcon sx={{ fontSize: { xs: 30, sm: 40 }, color: '#ff9800' }} />;
       case 'partly cloudy':
-        return <CloudIcon sx={{ fontSize: 40, color: '#90a4ae' }} />;
+        return <CloudIcon sx={{ fontSize: { xs: 30, sm: 40 }, color: '#90a4ae' }} />;
       case 'rainy':
-        return <ThunderstormIcon sx={{ fontSize: 40, color: '#2196f3' }} />;
+        return <ThunderstormIcon sx={{ fontSize: { xs: 30, sm: 40 }, color: '#2196f3' }} />;
       case 'cloudy':
-        return <CloudIcon sx={{ fontSize: 40, color: '#78909c' }} />;
+        return <CloudIcon sx={{ fontSize: { xs: 30, sm: 40 }, color: '#78909c' }} />;
       case 'snowy':
-        return <AcUnitIcon sx={{ fontSize: 40, color: '#03a9f4' }} />;
+        return <AcUnitIcon sx={{ fontSize: { xs: 30, sm: 40 }, color: '#03a9f4' }} />;
       default:
-        return <CloudIcon sx={{ fontSize: 40, color: '#90a4ae' }} />;
+        return <CloudIcon sx={{ fontSize: { xs: 30, sm: 40 }, color: '#90a4ae' }} />;
     }
   };
 
@@ -111,9 +112,19 @@ const WeatherIntegration = () => {
 
   const farmingAdvice = getFarmingAdvice(weatherData);
 
+  // Prepare data for temperature chart
+  const temperatureData = [
+    { time: '6 AM', temp: 18 },
+    { time: '9 AM', temp: 21 },
+    { time: '12 PM', temp: 24 },
+    { time: '3 PM', temp: 26 },
+    { time: '6 PM', temp: 22 },
+    { time: '9 PM', temp: 19 }
+  ];
+
   return (
     <DashboardLayout userRole="farmer" userName="Farmer John">
-      <Box sx={{ flexGrow: 1, p: 2 }}>
+      <Box sx={{ flexGrow: 1, p: { xs: 1, sm: 2 } }}>
         <Typography variant="h4" gutterBottom sx={{ mb: 3, color: '#2e7d32', fontWeight: 500 }}>
           Weather Integration
         </Typography>
@@ -124,7 +135,7 @@ const WeatherIntegration = () => {
             <Typography variant="h6" sx={{ mb: 2, fontWeight: 500 }}>
               Current Weather at {weatherData.location}
             </Typography>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={12} md={4} sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 {getWeatherIcon(weatherData.condition)}
                 <Typography variant="h4" sx={{ mt: 2, fontWeight: 500 }}>
@@ -193,6 +204,34 @@ const WeatherIntegration = () => {
                 </Grid>
               </Grid>
             </Grid>
+          </CardContent>
+        </Card>
+        
+        {/* Temperature Chart */}
+        <Card sx={{ mb: 3, borderRadius: 3, boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.08)' }}>
+          <CardContent>
+            <Typography variant="h6" sx={{ mb: 2, fontWeight: 500 }}>
+              Temperature Forecast
+            </Typography>
+            <Box sx={{ width: '100%', minHeight: { xs: 250, sm: 300 } }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={temperatureData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="time" />
+                  <YAxis />
+                  <Tooltip />
+                  <Legend />
+                  <Line 
+                    type="monotone" 
+                    dataKey="temp" 
+                    name="Temperature (°C)" 
+                    stroke="#ff9800" 
+                    strokeWidth={2} 
+                    activeDot={{ r: 8 }} 
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </Box>
           </CardContent>
         </Card>
         
